@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Contact - ZoZin Pickleball</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="./css/style.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to bottom right, #e0f7fa, #fffde7);
+    }
+    .contact-container {
+      display: flex;
+      justify-content: space-between;
+      max-width: 1200px;
+      margin: auto;
+      padding: 60px 20px;
+      gap: 40px;
+    }
+    .contact-info {
+      flex: 1;
+      color: #333;
+    }
+    .contact-info .logo {
+      width: 150px;
+      margin-bottom: 10px;
+    }
+    .contact-info h1 {
+      font-size: 20px;
+      margin-bottom: 15px;
+      color: #00796b;
+    }
+    .contact-info h2 {
+      font-size: 28px;
+      margin-bottom: 25px;
+    }
+    .info-item {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 20px;
+      font-size: 16px;
+    }
+    .info-item i {
+      font-size: 22px;
+      color: #009688;
+      margin-right: 15px;
+      margin-top: 5px;
+    }
+    .socials a {
+      color: #00796b;
+      font-size: 20px;
+      margin-right: 15px;
+      text-decoration: none;
+    }
+    .contact-form {
+      flex: 1;
+      background: white;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+    .contact-form h2 {
+      margin-bottom: 20px;
+      color: #00796b;
+      text-align: center;
+    }
+    .contact-form form {
+      display: flex;
+      flex-direction: column;
+    }
+    .contact-form input,
+    .contact-form textarea {
+      margin-bottom: 15px;
+      padding: 12px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 15px;
+      width: 100%;
+    }
+    .contact-form button {
+      padding: 12px;
+      background-color: #009688;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+    .contact-form button:hover {
+      background-color: #00796b;
+    }
+  </style>
+</head>
+<body>
+  <div class="top-bar">
+    Free shipping for orders from 1 million • 24/7 support
+  </div>
+
+  <header>
+    <div class="logo">ZoZin</div>
+    <div class="nav-center">
+      <nav>
+        <a href="trangchuPick.html">Introduction</a>
+        <a href="ZoZinProduct.html">Products</a>
+        <a href="#">Cooperation</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+    <div class="header-right">
+      <div class="avatar-container" onclick="toggleDropdown()">
+        <img src="./img/pro5.jpg" class="avatar">
+        <div class="dropdown-menu" id="dropdown">
+          <button onclick="goToProfile()">👤 Profile</button>
+          <button onclick="logout()">🚪 Logout</button>
+        </div>
+      </div>
+    </div>
+    <a href="cart.html" class="cart">
+      <i class="fas fa-shopping-cart"></i>
+      <span class="cart-count">0</span>
+    </a>
+  </header>
+
+  <section class="hero">
+    <h1>CONTACT</h1>
+    <h2>SEND US A MESSAGE</h2>
+  </section>
+  <div class="contact-container">
+    <div class="contact-info">
+      <h1>Zozin Pickleball - Elevate Your Game</h1>
+      <h2>CONTACT</h2>
+      <div class="info-item">
+        <i class="fas fa-map-marker-alt"></i>
+        <div>
+          <strong>Address</strong><br>
+          68 Lang Ha, Dong Da District, Hanoi
+        </div>
+      </div>
+      <div class="info-item">
+        <i class="fas fa-phone-alt"></i>
+        <div>
+          <strong>Phone</strong><br>
+          0909 123 456
+        </div>
+      </div>
+      <div class="info-item">
+        <i class="fas fa-envelope"></i>
+        <div>
+          <strong>Email</strong><br>
+          zozinpickleball@gmail.com
+        </div>
+      </div>
+      <div class="socials">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-youtube"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+      </div>
+    </div>
+
+    <div class="contact-form">
+      <h2>Send a Message to Zozin</h2>
+      <form action="#" method="post">
+        <input type="text" placeholder="Full Name" required>
+        <input type="tel" placeholder="Phone Number" required>
+        <input type="email" placeholder="Email" required>
+        <textarea placeholder="Message" rows="5" required></textarea>
+        <button type="submit">SEND NOW</button>
+      </form>
+    </div>
+  </div>
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-logo">
+        <h3>ZoZin</h3>
+        <p>Accompanying you on your journey to conquer Pickleball – where strength & passion unite.</p>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-facebook fa-lg"></i></a>
+          <a href="#"><i class="fab fa-youtube fa-lg"></i></a>
+          <a href="#"><i class="fab fa-instagram fa-lg"></i></a>
+          <a href="#"><i class="fab fa-twitter fa-lg"></i></a>
+        </div>
+      </div>
+      <div class="footer-section">
+        <h4>Information</h4>
+        <ul>
+          <li><a href="#">About ZoZin</a></li>
+          <li><a href="#">Shopping Guide</a></li>
+          <li><a href="#">Warranty Policy</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">Return Policy</a></li>
+          <li><a href="#">Paddle Consultation</a></li>
+          <li><a href="#">Feedback & Complaints</a></li>
+        </ul>
+      </div>
+      <div class="footer-section footer-contact">
+        <h4>Contact</h4>
+        <p>Hotline: 0795067992</p>
+        <p>Email: nguyenduyvip9@gmail.com</p>
+        <p>Address: Dong La, An Khanh, Hanoi</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      © 2025 ZoZin Pickleball. All rights reserved.
+    </div>
+  </footer>
+  <script src="cart.js"></script>
+  <script src="profile.js"></script>
+  <script>
+    function updateCartCount() {
+      try {
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        document.querySelector('.cart-count').textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+      } catch (e) {
+        document.querySelector('.cart-count').textContent = 0;
+      }
+    }
+    updateCartCount();
+  </script>
+
+</body>
+</html>

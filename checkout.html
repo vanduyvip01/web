@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Order Checkout</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: linear-gradient(135deg, #e0f7fa 0%, #fffde7 100%);
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+    }
+    .checkout-container {
+      max-width: 480px;
+      margin: 50px auto;
+      background: #fff;
+      padding: 36px 28px 28px 28px;
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+      position: relative;
+    }
+    .checkout-container h2 {
+      text-align: center;
+      color: #2e5b8c;
+      margin-bottom: 28px;
+      font-size: 28px;
+      letter-spacing: 1px;
+    }
+    .form-group {
+      margin-bottom: 18px;
+    }
+    label {
+      display: block;
+      margin-bottom: 7px;
+      font-weight: 600;
+      color: #2e5b8c;
+      letter-spacing: 0.5px;
+    }
+    input, textarea, select {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 7px;
+      border: 1px solid #b0bec5;
+      font-size: 15px;
+      background: #f7f9fa;
+      transition: border 0.2s;
+    }
+    input:focus, textarea:focus {
+      border-color: #2e5b8c;
+      outline: none;
+    }
+    .pay-method {
+      display: flex;
+      gap: 24px;
+      margin-bottom: 18px;
+      align-items: center;
+    }
+    .pay-method label {
+      font-weight: 400;
+      color: #333;
+      margin-bottom: 0;
+      cursor: pointer;
+    }
+    button[type="submit"], .qr-section button, .success button {
+      background: #2e5b8c;
+      color: #fff;
+      border: none;
+      padding: 12px 32px;
+      border-radius: 7px;
+      font-size: 17px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 12px;
+      box-shadow: 0 2px 8px rgba(46,91,140,0.08);
+      transition: background 0.2s;
+    }
+    button[type="submit"]:hover, .qr-section button:hover, .success button:hover {
+      background: #1e3d61;
+    }
+    .qr-section {
+      text-align: center;
+      margin-top: 24px;
+      background: #f7f9fa;
+      padding: 24px 0 18px 0;
+      border-radius: 10px;
+      box-shadow: 0 2px 12px rgba(46,91,140,0.07);
+      animation: fadeIn 0.5s;
+    }
+    .qr-section img {
+      width: 180px;
+      margin-bottom: 12px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(46,91,140,0.09);
+    }
+    .qr-section h3 {
+      color: #2e5b8c;
+      margin-bottom: 10px;
+      font-size: 20px;
+    }
+    .qr-section p {
+      margin: 8px 0 0 0;
+      color: #333;
+      font-size: 15px;
+    }
+    .qr-section #qr-amount {
+      display: block;
+      font-size: 18px;
+      color: #e91e63;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+    .success {
+      color: #28a745;
+      font-size: 20px;
+      text-align: center;
+      margin-top: 28px;
+      background: #f7fff7;
+      padding: 24px 0 18px 0;
+      border-radius: 10px;
+      box-shadow: 0 2px 12px rgba(40,167,69,0.07);
+      animation: fadeIn 0.5s;
+    }
+    .success button {
+      background: #2e5b8c;
+      color: #fff;
+      margin-top: 18px;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+  </style>
+</head>
+<body>
+  <div class="checkout-container">
+    <h2>Order Checkout</h2>
+    <form id="checkout-form">
+      <div class="form-group">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" required placeholder="Enter your full name">
+      </div>
+      <div class="form-group">
+        <label for="phone">Phone Number</label>
+        <input type="tel" id="phone" required pattern="[0-9]{10,}" placeholder="Enter your phone number">
+      </div>
+      <div class="form-group">
+        <label for="address">Shipping Address</label>
+        <textarea id="address" required placeholder="Enter your address"></textarea>
+      </div>
+      <div class="form-group pay-method">
+        <label><input type="radio" name="pay" value="cod" checked> Pay with Cash</label>
+        <label><input type="radio" name="pay" value="qr"> Pay via QR Code</label>
+      </div>
+      <button type="submit">Confirm Payment</button>
+    </form>
+    <div class="qr-section" id="qr-section" style="display:none;">
+      <h3>Scan QR Code to Transfer</h3>
+      <img src="./img/qr.jpg" alt="Bank QR Code">
+      <span id="qr-amount"></span>
+      <p>Bank: <b>MB BANK - 8686819022005 - NGUYEN VAN DUY</b></p>
+      <button id="qr-done-btn" type="button">Bank transfer completed</button>
+    </div>
+    <div class="success" id="success" style="display:none;">
+      Order placed successfully! Thank you for shopping.<br>
+      <button onclick="window.location.href='ZoZinProduct.html'">Back to Products</button>
+    </div>
+  </div>
+  
+  <script>
+    // Get cart from localStorage
+    function getCart() {
+      try {
+        return JSON.parse(localStorage.getItem('cart')) || [];
+      } catch (e) {
+        return [];
+      }
+    }
+    function getTotal() {
+      const cart = getCart();
+      return cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    }
+    // Handle form submit
+    document.getElementById('checkout-form').onsubmit = function(e) {
+      e.preventDefault();
+      const pay = document.querySelector('input[name="pay"]:checked').value;
+      if (pay === 'cod') {
+        document.getElementById('success').style.display = 'block';
+        document.getElementById('checkout-form').style.display = 'none';
+        document.getElementById('qr-section').style.display = 'none';
+        // Clear cart
+        localStorage.removeItem('cart');
+      } else {
+        document.getElementById('qr-section').style.display = 'block';
+        document.getElementById('checkout-form').style.display = 'none';
+        document.getElementById('success').style.display = 'none';
+        document.getElementById('qr-amount').textContent = 'Amount: ' + getTotal().toLocaleString() + '₫';
+        // Don't clear cart until transfer confirmed
+      }
+    };
+
+    // Event for "I Have Transferred" button
+    document.getElementById('qr-done-btn').onclick = function() {
+      document.getElementById('success').style.display = 'block';
+      document.getElementById('qr-section').style.display = 'none';
+      // Clear cart
+      localStorage.removeItem('cart');
+    };
+  </script>
+</body>
+</html>

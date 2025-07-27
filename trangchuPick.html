@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ZoZin Pickleball - Introduction</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+
+  <div class="top-bar">
+    Free shipping for orders from 1 million • 24/7 support
+  </div>
+
+  <header>
+    <div class="logo">ZoZin</div>
+    <div class="nav-center">
+      <nav>
+        <a href="trangchuPick.html">Introduction</a>
+        <a href="ZoZinProduct.html">Products</a>
+        <a href="#">Cooperation</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+    <div class="header-right">
+      <div class="avatar-container" onclick="toggleDropdown()">
+        <img src="./img/pro5.jpg" class="avatar">
+        <div class="dropdown-menu" id="dropdown">
+          <button onclick="goToProfile()">👤 Profile</button>
+          <button onclick="logout()">🚪 Logout</button>
+        </div>
+      </div>
+    </div>
+    <a href="cart.html" class="cart">
+      <i class="fas fa-shopping-cart"></i>
+      <span class="cart-count">0</span>
+    </a>
+  </header>
+
+  <section class="hero">
+    <h1>ZOZIN PICKLEBALL</h1>
+    <h2>REPUTABLE PICKLEBALL PADDLE BRAND</h2>
+  </section>
+
+  <section class="paddles">
+    <div class="card">
+      <img src="./img/kamito gamma.jpg" alt="Kamito Gamma">
+      <div class="name">Kamito Gamma</div>
+      <p>Paddle designed for high accuracy and superior power, suitable for professional competition.</p>
+    </div>
+    <div class="card">
+      <img src="./img/zuto carbon.png" alt="Zuto Carbon">
+      <div class="name">Zuto Carbon</div>
+      <p>Ultra-light paddle with carbon surface for faster reaction and better control.</p>
+    </div>
+    <div class="card">
+      <img src="./img/kamito alpha.jpg" alt="Kamito Alpha">
+      <div class="name">Kamito Alpha</div>
+      <p>Balanced design enhances spin and stable defense capabilities.</p>
+    </div>
+    <div class="card">
+      <img src="./img/zuto ignite.png" alt="Zuto Ignite">
+      <div class="name">Zuto Ignite</div>
+      <p>Specialized paddle for fast attack play, effective anti-slip surface.</p>
+    </div>
+    <div class="card">
+      <img src="./img/kamito tiamo.jpg" alt="Kamito Tiamo">
+      <div class="name">Kamito Tiamo</div>
+      <p>Modern appearance, stable performance – ideal choice for beginners.</p>
+    </div>
+  </section>
+
+  <h2 class="brand-title">INTRODUCTION TO ZOZIN PICKLEBALL BRAND</h2>
+
+  <div class="brand-section">
+    <div class="brand-text">
+      <h3><strong>Conquer the Peak with Zozin Pickleball – Strength & Technology Combined</strong></h3>
+      <p><strong>Zozin Pickleball – The Choice of Elite Players</strong></p>
+      <p>
+        Zozin Pickleball is a brand that combines breakthrough technology and optimal design for all player levels.
+        With advanced surface structure and lightweight materials, Zozin paddles not only boost performance but also help reduce impact force when hitting the ball.
+      </p>
+    </div>
+    <div class="brand-image">
+      <img src="./img/6.jpg" alt="Zozin Pickleball">
+    </div>
+  </div>
+
+  <div class="brand-section-end">
+    <div class="brand-image">
+      <img src="./img/7.jpg" alt="Zozin Pickleball">
+    </div>
+    <div class="brand-text">
+      <h3><strong>Peak Performance – Zozin Pickleball Is More Than Just a Paddle</strong></h3>
+      <p>
+        Every Zozin paddle undergoes rigorous testing to ensure optimal quality and durability.
+        With sophisticated design and superior control, the product delivers an excellent competition experience for users.
+      </p>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-logo">
+        <h3>ZoZin</h3>
+        <p>Accompanying you on your journey to conquer Pickleball – where strength & passion unite.</p>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-facebook fa-lg"></i></a>
+          <a href="#"><i class="fab fa-youtube fa-lg"></i></a>
+          <a href="#"><i class="fab fa-instagram fa-lg"></i></a>
+          <a href="#"><i class="fab fa-twitter fa-lg"></i></a>
+        </div>
+      </div>
+      <div class="footer-section">
+        <h4>Information</h4>
+        <ul>
+          <li><a href="#">About ZoZin</a></li>
+          <li><a href="#">Shopping Guide</a></li>
+          <li><a href="#">Warranty Policy</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">Return Policy</a></li>
+          <li><a href="#">Paddle Consultation</a></li>
+          <li><a href="#">Feedback & Complaints</a></li>
+        </ul>
+      </div>
+      <div class="footer-section footer-contact">
+        <h4>Contact</h4>
+        <p>Hotline: 0795067992</p>
+        <p>Email: nguyenduyvip9@gmail.com</p>
+        <p>Address: Dong La, An Khanh, Hanoi</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      © 2025 ZoZin Pickleball. All rights reserved.
+    </div>
+  </footer>
+  <script src="cart.js"></script>
+  <script src="profile.js"></script>
+  <script>
+    function updateCartCount() {
+      try {
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        document.querySelector('.cart-count').textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+      } catch (e) {
+        document.querySelector('.cart-count').textContent = 0;
+      }
+    }
+    updateCartCount();
+  </script>
+</body>
+</html>

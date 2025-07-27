@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Zuto Pickleball - Products</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="./css/style.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f0f2f5;
+    }
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 20px;
+      padding: 30px;
+      max-width: 1200px;
+      margin: auto;
+    }
+    .product {
+      background: #fff;
+      padding: 16px;
+      border: 1px solid #e0e0e0;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      text-align: center;
+      transition: transform 0.2s ease;
+      position: relative;
+    }
+    .product:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+    .product img {
+      max-width: 120px;
+      height: auto;
+      margin-bottom: 12px;
+    }
+    .product h3 {
+      font-size: 16px;
+      margin: 8px 0;
+      color: #333;
+    }
+    .product p {
+      font-size: 15px;
+      color: #c00;
+      font-weight: bold;
+      margin-bottom: 12px;
+    }
+    .product button {
+      padding: 8px 14px;
+      background: #2e5b8c;
+      color: white;
+      border: none;
+      font-size: 14px;
+      font-weight: bold;
+      border-radius: 2px;
+      cursor: pointer;
+      transition: background 0.3s;
+      width: 100%;
+      max-width: 180px;
+    }
+    .product button:hover {
+      background: #1e3d61;
+    }
+  </style>
+</head>
+<body>
+<div class="top-bar">
+    Free shipping for orders from 1 million • 24/7 support
+</div>
+
+<header>
+  <div class="logo">ZoZin</div>
+  <div class="nav-center">
+    <nav>
+      <a href="trangchuPick.html">About</a>
+      <a href="#">Products</a>
+      <a href="#">Cooperation</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </div>
+  <div class="header-right">
+    <div class="avatar-container" onclick="toggleDropdown()">
+      <img src="./img/pro5.jpg" class="avatar">
+      <div class="dropdown-menu" id="dropdown">
+        <button onclick="goToProfile()">👤 Profile</button>
+        <button onclick="logout()">🚪 Logout</button>
+      </div>
+    </div>
+  </div>
+  <a href="cart.html" class="cart">
+    <i class="fas fa-shopping-cart"></i>
+    <span class="cart-count" id="cart-count">0</span>
+  </a>
+</header>
+
+<section class="hero">
+  <h1>PRODUCTS</h1>
+  <h2>QUALITY PICKLEBALL PADDLES</h2>
+</section>
+
+<div class="products" id="product-list">
+  <!-- Products will be rendered by JS -->
+</div>
+
+<footer class="site-footer">
+  <div class="footer-container">
+    <div class="footer-logo">
+      <h3>ZoZin</h3>
+      <p>Accompanying you on your journey to conquer Pickleball – where strength & passion unite.</p>
+      <div class="social-icons">
+        <a href="#"><i class="fab fa-facebook fa-lg"></i></a>
+        <a href="#"><i class="fab fa-youtube fa-lg"></i></a>
+        <a href="#"><i class="fab fa-instagram fa-lg"></i></a>
+        <a href="#"><i class="fab fa-twitter fa-lg"></i></a>
+      </div>
+    </div>
+    <div class="footer-section">
+      <h4>Information</h4>
+      <ul>
+        <li><a href="#">About ZoZin</a></li>
+        <li><a href="#">Shopping Guide</a></li>
+        <li><a href="#">Warranty Policy</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-section">
+      <h4>Support</h4>
+      <ul>
+        <li><a href="#">FAQ</a></li>
+        <li><a href="#">Return Policy</a></li>
+        <li><a href="#">Paddle Consultation</a></li>
+        <li><a href="#">Feedback & Complaints</a></li>
+      </ul>
+    </div>
+    <div class="footer-section footer-contact">
+      <h4>Contact</h4>
+      <p>Hotline: 0795067992</p>
+      <p>Email: nguyenduyvip9@gmail.com</p>
+      <p>Address: Dong La, An Khanh, Hanoi</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    © 2025 ZoZin Pickleball. All rights reserved.
+  </div>
+</footer>
+<script src="cart.js"></script>
+<script src="profile.js"></script>
+
+<script>
+  // Product list
+  const products = [
+    { name: "Kamito Gamma", price: 4650000, image: "./img/kamito gamma.jpg" },
+    { name: "ZUTO GEN 1", price: 650000, image: "./img/zuto gen 1.png" },
+    { name: "ZUTO CARBON T7+", price: 1450000, image: "./img/zuto carbon t7+.png" },
+    { name: "Kamito Alpha", price: 1990000, image: "./img/kamito alpha.jpg" },
+    { name: "Kamito Tiamo", price: 2990000, image: "./img/kamito tiamo.jpg" },
+    { name: "ZUTO IGNITE PRO", price: 2990000, image: "./img/zuto ignite pro.png" },
+    { name: "ZUTO XANH PASTEL", price: 950000, image: "./img/zuto xanh pastel.png" },
+    { name: "ZUTO BLUE PADDLE", price: 950000, image: "./img/zuto blue paddle.png" },
+    { name: "ZUTO PINK PADDLE", price: 950000, image: "./img/zuto pink paddle.png" },
+    { name: "ZUTO HỒNG PASTEL", price: 950000, image: "./img/zuto hồng pastel.png" },
+    { name: "ZUTO NH-24 TÍM", price: 650000, image: "./img/zuto nh-24 tím.png" },
+    { name: "ZUTO IGNITE 2 PRO", price: 3990000, image: "./img/zuto ignite 2 pro.png" }
+  ];
+
+  // Get cart from localStorage
+  function getCart() {
+    try {
+      return JSON.parse(localStorage.getItem('cart')) || [];
+    } catch (e) {
+      return [];
+    }
+  }
+
+  // Save cart to localStorage
+  function saveCart(cart) {
+    localStorage.setItem('cart', JSON.stringify(cart));
+  }
+
+  let cart = getCart();
+
+  // Update cart count on icon
+  function updateCartCount() {
+    document.getElementById('cart-count').textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+  }
+
+  // Add to cart function
+  function addToCart(name, price, image) {
+    cart = getCart();
+    const idx = cart.findIndex(item => item.name === name);
+    if (idx > -1) {
+      cart[idx].quantity += 1;
+    } else {
+      cart.push({ name, price, image, quantity: 1 });
+    }
+    saveCart(cart);
+    updateCartCount();
+    // No confirm, no redirect
+  }
+
+  // Render products
+  const productList = document.getElementById('product-list');
+  products.forEach(prod => {
+    const div = document.createElement('div');
+    div.className = 'product';
+    div.innerHTML = `
+      <img src="${prod.image}" alt="${prod.name}">
+      <h3>${prod.name}</h3>
+      <p>${prod.price.toLocaleString()}₫</p>
+      <button>ADD TO CART</button>
+    `;
+    div.querySelector('button').onclick = function() {
+      addToCart(prod.name, prod.price, prod.image);
+    };
+    productList.appendChild(div);
+  });
+
+  // Update cart count when page loads
+  updateCartCount();
+</script>
+</body>
+</html>

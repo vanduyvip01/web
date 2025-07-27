@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Profile</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="./css/style.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 1px 0;
+      background: linear-gradient(145deg, #e0f7fa, #fffde7);
+      background-attachment: fixed;
+    }
+
+    .profile-title {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .profile-title h1 {
+      font-size: 32px;
+      color: #2e3b4e;
+      margin-bottom: 10px;
+    }
+
+    .profile-container {
+      max-width: 600px;
+      margin: auto;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 40px 30px;
+      border-radius: 16px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+      transition: all 0.3s ease;
+      backdrop-filter: blur(6px);
+    }
+
+    .profile-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .profile-header img {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      border: 4px solid #007bff;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      transition: transform 0.3s ease;
+    }
+
+    .profile-header img:hover {
+      transform: scale(1.05);
+    }
+
+    .profile-header h2 {
+      margin-top: 12px;
+      font-size: 24px;
+      color: #333;
+    }
+
+    .profile-info p {
+      font-size: 16px;
+      margin: 12px 0;
+      color: #444;
+    }
+
+    .profile-info strong {
+      width: 130px;
+      display: inline-block;
+      color: #007bff;
+    }
+
+    .edit-btn, .save-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 24px;
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      font-weight: 500;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      font-size: 15px;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .edit-btn:hover,
+    .save-btn:hover {
+      background-color: #0056b3;
+    }
+
+    .edit-form {
+      display: none;
+      margin-top: 25px;
+      border-top: 1px solid #ddd;
+      padding-top: 20px;
+    }
+
+    .edit-form input {
+      width: 100%;
+      padding: 10px 14px;
+      margin: 10px 0;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+      transition: border 0.3s ease;
+    }
+
+    .edit-form input:focus {
+      outline: none;
+      border-color: #007bff;
+      box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
+    }
+
+    .save-btn {
+      background-color: #28a745;
+    }
+
+    .save-btn:hover {
+      background-color: #1e7e34;
+    }
+  </style>
+</head>
+<body>
+  <div class="top-bar">
+    Free shipping for orders from 1 million • 24/7 support
+  </div>
+
+  <header>
+    <div class="logo">ZoZin</div>
+    <div class="nav-center">
+      <nav>
+        <a href="trangchuPick.html">Introduction</a>
+        <a href="ZoZinProduct.html">Products</a>
+        <a href="#">Cooperation</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+    <div class="header-right">
+      <div class="avatar-container" onclick="toggleDropdown()">
+        <img src="./img/pro5.jpg" class="avatar">
+        <div class="dropdown-menu" id="dropdown">
+          <button onclick="goToProfile()">👤 Profile</button>
+          <button onclick="logout()">🚪 Logout</button>
+        </div>
+      </div>
+    </div>
+    <a href="cart.html" class="cart">
+      <i class="fas fa-shopping-cart"></i>
+      <span class="cart-count" id="cart-count">0</span>
+    </a>
+  </header>
+
+  <section class="hero">
+    <h1>ZOZIN PICKLEBALL</h1>
+    <h2>REPUTABLE PICKLEBALL PADDLE BRAND</h2>
+  </section>
+
+  <div class="profile-title">
+    <h1><i class="fas fa-user-circle"></i> Profile</h1>
+  </div>
+
+  <div class="profile-container">
+    <div class="profile-header">
+      <img src="./img/zo.jpg" alt="Avatar">
+      <h2 id="profile-name">...</h2>
+    </div>
+
+    <div class="profile-info">
+      <p><strong>Email:</strong> <span id="profile-email">...</span></p>
+      <p><strong>Phone:</strong> <span id="profile-phone">...</span></p>
+      <p><strong>Address:</strong> <span id="profile-address">...</span></p>
+      <button class="edit-btn" onclick="toggleEditForm()">✏️ Edit</button>
+    </div>
+
+    <div class="edit-form" id="edit-form">
+      <input type="text" id="edit-name" placeholder="Full Name" />
+      <input type="email" id="edit-email" placeholder="Email" />
+      <input type="text" id="edit-phone" placeholder="Phone Number" />
+      <input type="text" id="edit-address" placeholder="Address" />
+      <button class="save-btn" onclick="saveProfile()">💾 Save</button>
+    </div>
+  </div>
+
+  <script>
+  // Get data from localStorage if available
+  function getProfileData() {
+    try {
+      return JSON.parse(localStorage.getItem('profile_customer')) || {
+        name: '',
+        email: '',
+        phone: '',
+        address: ''
+      };
+    } catch (e) {
+      return { name: '', email: '', phone: '', address: '' };
+    }
+  }
+
+  function saveProfileData(data) {
+    localStorage.setItem('profile_customer', JSON.stringify(data));
+  }
+
+  let profileData = getProfileData();
+
+  function renderProfile() {
+    document.getElementById('profile-name').innerText = profileData.name || 'No name';
+    document.getElementById('profile-email').innerText = profileData.email || 'No email';
+    document.getElementById('profile-phone').innerText = profileData.phone || 'No phone';
+    document.getElementById('profile-address').innerText = profileData.address || 'No address';
+    document.getElementById('edit-name').value = profileData.name;
+    document.getElementById('edit-email').value = profileData.email;
+    document.getElementById('edit-phone').value = profileData.phone;
+    document.getElementById('edit-address').value = profileData.address;
+  }
+
+  function toggleEditForm() {
+    const form = document.getElementById("edit-form");
+    form.style.display = form.style.display === "none" ? "block" : "none";
+    renderProfile();
+  }
+
+  function saveProfile() {
+    profileData.name = document.getElementById('edit-name').value;
+    profileData.email = document.getElementById('edit-email').value;
+    profileData.phone = document.getElementById('edit-phone').value;
+    profileData.address = document.getElementById('edit-address').value;
+    saveProfileData(profileData);
+    renderProfile();
+    document.getElementById("edit-form").style.display = "none";
+  }
+
+  window.addEventListener('DOMContentLoaded', function() {
+    // Show cart count
+    try {
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      document.getElementById('cart-count').textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+    } catch (e) {
+      document.getElementById('cart-count').textContent = 0;
+    }
+    // Show profile info on page load
+    renderProfile();
+  });
+  </script>
+
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-logo">
+        <h3>ZoZin</h3>
+        <p>Accompanying you on your journey to conquer Pickleball – where strength & passion unite.</p>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-facebook fa-lg"></i></a>
+          <a href="#"><i class="fab fa-youtube fa-lg"></i></a>
+          <a href="#"><i class="fab fa-instagram fa-lg"></i></a>
+          <a href="#"><i class="fab fa-twitter fa-lg"></i></a>
+        </div>
+      </div>
+      <div class="footer-section">
+        <h4>Information</h4>
+        <ul>
+          <li><a href="#">About ZoZin</a></li>
+          <li><a href="#">Shopping Guide</a></li>
+          <li><a href="#">Warranty Policy</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">Return Policy</a></li>
+          <li><a href="#">Paddle Consultation</a></li>
+          <li><a href="#">Feedback & Complaints</a></li>
+        </ul>
+      </div>
+      <div class="footer-section footer-contact">
+        <h4>Contact</h4>
+        <p>Hotline: 0795067992</p>
+        <p>Email: nguyenduyvip9@gmail.com</p>
+        <p>Address: Dong La, An Khanh, Hanoi</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      © 2025 ZoZin Pickleball. All rights reserved.
+    </div>
+  </footer>
+  <script src="cart.js"></script>
+  <script src="profile.js"></script>
+</body>
+</html>
