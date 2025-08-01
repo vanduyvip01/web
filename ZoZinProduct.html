@@ -74,10 +74,11 @@
 </div>
 
 <header>
-  <div class="logo">ZoZin</div>
+  <div class="logo"><img src="./img/bt.jpg" alt="BTEC Logo" style="height:40px; vertical-align:middle; margin-left:10px;"> ZoZin
+  </div>
   <div class="nav-center">
     <nav>
-      <a href="trangchuPick.html">About</a>
+      <a href="trangchuPick.html">Home</a>
       <a href="#">Products</a>
       <a href="#">Cooperation</a>
       <a href="contact.html">Contact</a>
@@ -88,10 +89,12 @@
       <img src="./img/pro5.jpg" class="avatar">
       <div class="dropdown-menu" id="dropdown">
         <button onclick="goToProfile()">👤 Profile</button>
+        <button onclick="goToOrders()">📦 Order History</button>
         <button onclick="logout()">🚪 Logout</button>
       </div>
     </div>
   </div>
+
   <a href="cart.html" class="cart">
     <i class="fas fa-shopping-cart"></i>
     <span class="cart-count" id="cart-count">0</span>
@@ -222,6 +225,9 @@
 
   // Update cart count when page loads
   updateCartCount();
+  function goToOrders() {
+    window.location.href = "orders.html";
+  }
 </script>
 </body>
 </html>

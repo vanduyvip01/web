@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Order History</title>
+
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: linear-gradient(135deg, #e0f7fa 0%, #fffde7 100%);
+      margin: 0;
+      min-height: 100vh;
+    }
+    .orders-container {
+      max-width: 1000px;
+      margin: 40px auto;
+      background: #fff;
+      padding: 36px 28px;
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    }
+    h2 {
+      text-align: center;
+      color: #2e5b8c;
+      margin-bottom: 32px;
+      font-size: 32px;
+      letter-spacing: 1px;
+    }
+    .order {
+      border-bottom: 1px solid #eee;
+      margin-bottom: 40px;
+      padding-bottom: 24px;
+      animation: fadeIn 0.5s;
+    }
+    .order:last-child {
+      border-bottom: none;
+    }
+    .order-date {
+      font-weight: bold;
+      color: #2e5b8c;
+      margin-bottom: 10px;
+    }
+    .order-info {
+      margin-bottom: 6px;
+      color: #444;
+      font-size: 15px;
+    }
+    .order-total {
+      color: #e91e63;
+      font-weight: bold;
+      margin-top: 12px;
+      font-size: 18px;
+    }
+    .order-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+    .order-table th, .order-table td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: center;
+      font-size: 14px;
+    }
+    .order-table th {
+      background-color: #f0f0f0;
+    }
+    
+    .order-table img {
+      width: 60px;
+      height: auto;
+      border-radius: 6px;
+    }
+    .no-orders {
+      text-align: center;
+      color: #888;
+      font-size: 18px;
+      margin-top: 40px;
+    }
+    .back-btn {
+      display: block;
+      margin: 30px auto 0 auto;
+      padding: 12px 32px;
+      background: #2e5b8c;
+      color: #fff;
+      border: none;
+      border-radius: 7px;
+      font-size: 17px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(46,91,140,0.08);
+      transition: background 0.2s;
+      text-align: center;
+      text-decoration: none;
+      width: fit-content;
+    }
+    .back-btn:hover {
+      background: #1e3d61;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+  </style>
+
+  <div class="orders-container">
+    <h2>Order History</h2>
+    <div id="orders"></div>
+    <a href="ZoZinProduct.html" class="back-btn">Back to Products</a>
+  </div>
+
+  <script>
+    const products = [
+      { name: "Kamito Gamma", price: 4650000, image: "./img/kamito gamma.jpg" },
+      { name: "ZUTO GEN 1", price: 650000, image: "./img/zuto gen 1.png" },
+      { name: "ZUTO CARBON T7+", price: 1450000, image: "./img/zuto carbon t7+.png" },
+      { name: "Kamito Alpha", price: 1990000, image: "./img/kamito alpha.jpg" },
+      { name: "Kamito Tiamo", price: 2990000, image: "./img/kamito tiamo.jpg" },
+      { name: "ZUTO IGNITE PRO", price: 2990000, image: "./img/zuto ignite pro.png" },
+      { name: "ZUTO XANH PASTEL", price: 950000, image: "./img/zuto xanh pastel.png" },
+      { name: "ZUTO BLUE PADDLE", price: 950000, image: "./img/zuto blue paddle.png" },
+      { name: "ZUTO PINK PADDLE", price: 950000, image: "./img/zuto pink paddle.png" },
+      { name: "ZUTO HỒNG PASTEL", price: 950000, image: "./img/zuto hồng pastel.png" },
+      { name: "ZUTO NH-24 TÍM", price: 650000, image: "./img/zuto nh-24 tím.png" },
+      { name: "ZUTO IGNITE 2 PRO", price: 3990000, image: "./img/zuto ignite 2 pro.png" }
+    ];
+
+    function renderOrders() {
+    let orders = [];
+    try {
+      orders = JSON.parse(localStorage.getItem('orders')) || [];
+    } catch (e) {}
+    const container = document.getElementById('orders');
+    if (orders.length === 0) {
+      container.innerHTML = "<div class='no-orders'>No orders found.</div>";
+      return;
+    }
+
+    orders.slice().reverse().forEach(order => {
+      const div = document.createElement('div');
+      div.className = 'order';
+      const itemsHTML = `
+        <table class="order-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Image</th>
+              <th>Product</th>
+              <th>Qty</th>
+              <th>Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${order.items.map((item, idx) => {
+              const productInfo = products.find(p => p.name === item.name);
+              const imgSrc = productInfo ? productInfo.image : 'no-image.jpg';
+              return `
+                <tr>
+                  <td>${idx + 1}</td>
+                  <td><img src="${imgSrc}" alt="${item.name}"></td>
+                  <td>${item.name}</td>
+                  <td>${item.quantity}</td>
+                  <td>${item.price.toLocaleString()}₫</td>
+                </tr>
+              `;
+            }).join('')}
+          </tbody>
+        </table>
+      `;
+      div.innerHTML = `
+        <div class="order-date">Date: ${order.date}</div>
+        <div class="order-info"><strong>Name:</strong> ${order.name}</div>
+        <div class="order-info"><strong>Phone:</strong> ${order.phone}</div>
+        <div class="order-info"><strong>Address:</strong> ${order.address}</div>
+        <div class="order-info"><strong>Payment:</strong> ${order.pay === 'cod' ? 'Cash' : 'QR Code'}</div>
+        ${itemsHTML}
+        <div class="order-total">Total: ${order.total.toLocaleString()}₫</div>
+      `;
+      container.appendChild(div);
+    });
+  }
+
+  
+
+
+  function goToOrders() {
+    window.location.href = "orders.html";
+  }
+
+  renderOrders();
+</script>
+  </script>
+  <!-- Đã cập nhật đơn hàng -->
+
+</body>
+</html>

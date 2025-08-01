@@ -26,10 +26,10 @@ function register() {
     return;
   }
 
-  // (Không dùng localStorage, chỉ giả lập thành công)
+ 
   msgBox.innerText = "Registered successfully! Redirecting to login page...";
   
-  // Chuyển trang sau 1.5 giây
+  
   setTimeout(() => {
     window.location.href = "login.html";
   }, 1500);

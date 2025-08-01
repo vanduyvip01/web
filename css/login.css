@@ -1,7 +1,7 @@
 body {
   font-family: 'Segoe UI', sans-serif;
   background: url('../img/duyzo.png') repeat;
-  background-size: 300px auto; /* kích thước nhỏ */
+  background-size: 300px auto; 
   background-position: center;
   display: flex;
   justify-content: center;

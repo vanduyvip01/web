@@ -3,7 +3,7 @@ function login() {
   const password = document.getElementById('loginPassword').value;
   const msg = document.getElementById('loginMsg');
 
-  // Tài khoản mặc định
+  
   const defaultUsername = "admin";
   const defaultPassword = "123456";
 

@@ -101,10 +101,11 @@
   </div>
 
   <header>
-    <div class="logo">ZoZin</div>
+    <div class="logo"><img src="./img/bt.jpg" alt="BTEC Logo" style="height:40px; vertical-align:middle; margin-left:10px;"> ZoZin
+  </div>
     <div class="nav-center">
       <nav>
-        <a href="trangchuPick.html">Introduction</a>
+        <a href="trangchuPick.html">Home</a>
         <a href="ZoZinProduct.html">Products</a>
         <a href="#">Cooperation</a>
         <a href="contact.html">Contact</a>
@@ -115,6 +116,7 @@
         <img src="./img/pro5.jpg" class="avatar">
         <div class="dropdown-menu" id="dropdown">
           <button onclick="goToProfile()">👤 Profile</button>
+          <button onclick="goToOrders()">📦 Order History</button>
           <button onclick="logout()">🚪 Logout</button>
         </div>
       </div>
@@ -144,14 +146,14 @@
         <i class="fas fa-phone-alt"></i>
         <div>
           <strong>Phone</strong><br>
-          0909 123 456
+          079 506 7992
         </div>
       </div>
       <div class="info-item">
         <i class="fas fa-envelope"></i>
         <div>
           <strong>Email</strong><br>
-          zozinpickleball@gmail.com
+          nguyenduyvip9@gmail.com
         </div>
       </div>
       <div class="socials">
@@ -163,9 +165,9 @@
 
     <div class="contact-form">
       <h2>Send a Message to Zozin</h2>
-      <form action="#" method="post">
-        <input type="text" placeholder="Full Name" required>
-        <input type="tel" placeholder="Phone Number" required>
+      <form action="#" method="post" id="checkout-form">
+        <input type="text" placeholder="Full Name" id="name" required>
+        <input type="tel" placeholder="Phone Number" id="phone" required>
         <input type="email" placeholder="Email" required>
         <textarea placeholder="Message" rows="5" required></textarea>
         <button type="submit">SEND NOW</button>
@@ -216,16 +218,90 @@
   <script src="cart.js"></script>
   <script src="profile.js"></script>
   <script>
-    function updateCartCount() {
-      try {
-        const cart = JSON.parse(localStorage.getItem('cart')) || [];
-        document.querySelector('.cart-count').textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
-      } catch (e) {
-        document.querySelector('.cart-count').textContent = 0;
-      }
+  function updateCartCount() {
+    try {
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      document.querySelector('.cart-count').textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+    } catch (e) {
+      document.querySelector('.cart-count').textContent = 0;
     }
+  }
+
+  function getCart() {
+    try {
+      return JSON.parse(localStorage.getItem('cart')) || [];
+    } catch (e) {
+      return [];
+    }
+  }
+
+  function getTotal() {
+    const cart = getCart();
+    return cart.reduce((total, item) => total + item.quantity * item.price, 0);
+  }
+
+  function saveOrder(order) {
+    const orders = JSON.parse(localStorage.getItem('orders')) || [];
+    orders.push(order);
+    localStorage.setItem('orders', JSON.stringify(orders));
+  }
+
+  window.onload = function () {
     updateCartCount();
-  </script>
+
+    const form = document.getElementById('checkout-form');
+    const qrDoneBtn = document.getElementById('qr-done-btn');
+
+    if (form) {
+      form.onsubmit = function (e) {
+        e.preventDefault();
+
+        const payMethod = document.querySelector('input[name="pay"]:checked');
+        if (!payMethod) {
+          alert('Please select a payment method!');
+          return;
+        }
+
+        const pay = payMethod.value;
+        const order = {
+          date: new Date().toLocaleString(),
+          name: document.getElementById('name').value,
+          phone: document.getElementById('phone').value,
+          address: document.getElementById('address').value,
+          pay: pay,
+          items: getCart(),
+          total: getTotal()
+        };
+
+        saveOrder(order);
+
+        if (pay === 'cod') {
+          document.getElementById('success')?.style.setProperty('display', 'block');
+          form.style.display = 'none';
+          document.getElementById('qr-section')?.style.setProperty('display', 'none');
+          localStorage.removeItem('cart');
+        } else {
+          document.getElementById('qr-section')?.style.setProperty('display', 'block');
+          form.style.display = 'none';
+          document.getElementById('success')?.style.setProperty('display', 'none');
+          document.getElementById('qr-amount').textContent = 'Amount: ' + getTotal().toLocaleString() + '₫';
+        }
+      };
+    }
+
+    if (qrDoneBtn) {
+      qrDoneBtn.onclick = function () {
+        document.getElementById('success')?.style.setProperty('display', 'block');
+        document.getElementById('qr-section')?.style.setProperty('display', 'none');
+        localStorage.removeItem('cart');
+      };
+    }
+  };
+
+  function goToOrders() {
+    window.location.href = "orders.html";
+  }
+</script>
 
 </body>
 </html>

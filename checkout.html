@@ -164,6 +164,7 @@
     <div class="success" id="success" style="display:none;">
       Order placed successfully! Thank you for shopping.<br>
       <button onclick="window.location.href='ZoZinProduct.html'">Back to Products</button>
+      <button onclick="window.location.href='orders.html'">View Order History</button>
     </div>
   </div>
   
@@ -180,32 +181,71 @@
       const cart = getCart();
       return cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
     }
+    // Save order to localStorage
+    function saveOrder(order) {
+      let orders = [];
+      try {
+        orders = JSON.parse(localStorage.getItem('orders')) || [];
+      } catch (e) {}
+      orders.push(order);
+      localStorage.setItem('orders', JSON.stringify(orders));
+    }
     // Handle form submit
-    document.getElementById('checkout-form').onsubmit = function(e) {
-      e.preventDefault();
-      const pay = document.querySelector('input[name="pay"]:checked').value;
-      if (pay === 'cod') {
-        document.getElementById('success').style.display = 'block';
-        document.getElementById('checkout-form').style.display = 'none';
-        document.getElementById('qr-section').style.display = 'none';
-        // Clear cart
+     document.getElementById('checkout-form').onsubmit = function(e) {
+    e.preventDefault();
+    const pay = document.querySelector('input[name="pay"]:checked').value;
+    const order = {
+      date: new Date().toLocaleString(),
+      name: document.getElementById('name').value,
+      phone: document.getElementById('phone').value,
+      address: document.getElementById('address').value,
+      pay: pay,
+      items: getCart(),
+      total: getTotal()
+    };
+    saveOrder(order);
+
+    if (pay === 'cod') {
+      const success = document.getElementById('success');
+      const form = document.getElementById('checkout-form');
+      const qrSection = document.getElementById('qr-section');
+
+      if (success && form && qrSection) {
+        success.style.display = 'block';
+        form.style.display = 'none';
+        qrSection.style.display = 'none';
         localStorage.removeItem('cart');
       } else {
-        document.getElementById('qr-section').style.display = 'block';
-        document.getElementById('checkout-form').style.display = 'none';
-        document.getElementById('success').style.display = 'none';
-        document.getElementById('qr-amount').textContent = 'Amount: ' + getTotal().toLocaleString() + '₫';
-        // Don't clear cart until transfer confirmed
+        console.error('❌ One of the elements does not exist: #success, #checkout-form, #qr-section');
       }
-    };
+    } else {
+      const qrSection = document.getElementById('qr-section');
+      const form = document.getElementById('checkout-form');
+      const success = document.getElementById('success');
+      const qrAmount = document.getElementById('qr-amount');
 
-    // Event for "I Have Transferred" button
-    document.getElementById('qr-done-btn').onclick = function() {
-      document.getElementById('success').style.display = 'block';
-      document.getElementById('qr-section').style.display = 'none';
-      // Clear cart
-      localStorage.removeItem('cart');
-    };
+      if (qrSection && form && success && qrAmount) {
+        qrSection.style.display = 'block';
+        form.style.display = 'none';
+        success.style.display = 'none';
+        qrAmount.textContent = 'Amount: ' + getTotal().toLocaleString() + '₫';
+      } else {
+        console.error('❌ One of the elements does not exist: #qr-section, #checkout-form, #success, #qr-amount');
+      }
+    }
+  }; // ✅ ĐÂY LÀ DẤU ĐÓNG THIẾU
+
+  // Sự kiện nhấn nút đã chuyển khoản
+  document.addEventListener('DOMContentLoaded', function () {
+    const qrBtn = document.getElementById('qr-done-btn');
+    if (qrBtn) {
+      qrBtn.addEventListener('click', function () {
+        document.getElementById('success').style.display = 'block';
+        document.getElementById('qr-section').style.display = 'none';
+        localStorage.removeItem('cart');
+      });
+    }
+  });
   </script>
 </body>
 </html>
